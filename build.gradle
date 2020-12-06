@@ -1,0 +1,51 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+compileJava.options.encoding = 'UTF-8'
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'io.projectreactor:reactor-test'
+
+	compileOnly 'org.projectlombok:lombok:1.18.16'
+	annotationProcessor 'org.projectlombok:lombok:1.18.16'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+task zipSol(type: Zip) {
+	description "Creates solution distribution of this lab."
+	group = 'distribution'
+
+	dependsOn wrapper
+
+	from projectDir
+
+	include 'build.gradle'
+	include 'gradlew'
+	include 'gradlew.bat'
+	include 'gradle/'
+
+	include 'src/main/java/ch/fhnw/lecture/*.java'
+	include 'src/main/java/ch/fhnw/lecture/demo/*.java'
+	include 'src/main/java/ch/fhnw/lecture/history/*.java'
+}
+
+	
+
+
+
